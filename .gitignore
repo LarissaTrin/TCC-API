@@ -477,6 +477,6 @@ $RECYCLE.BIN/
 *.lnk
 
 #Exclude DB
-*.db
+# *.db
 *.db-shm
 *.db-wal
