@@ -15,12 +15,13 @@ COPY ["src/Project.Application/Project.Application.csproj", "Project.Application
 COPY ["src/Project.Domain/Project.Domain.csproj", "Project.Domain/"]
 COPY ["src/Project.Persistence/Project.Persistence.csproj", "Project.Persistence/"]
 RUN dotnet restore "Project.API/Project.API.csproj"
-COPY . .
+
 WORKDIR "/src/Project.API"
+COPY . .
 RUN dotnet build "Project.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Project.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Project.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
