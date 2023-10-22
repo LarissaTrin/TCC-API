@@ -1,0 +1,15 @@
+services:
+  trindade:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: trindade
+    container_name: trindade
+    tty: true
+    volumes:
+      - ./code:/root/code
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1.5G
