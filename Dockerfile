@@ -10,10 +10,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Project.API/Project.API.csproj", "Project.API/"]
-COPY ["Project.Application/Project.Application.csproj", "Project.Application/"]
-COPY ["Project.Domain/Project.Domain.csproj", "Project.Domain/"]
-COPY ["Project.Persistence/Project.Persistence.csproj", "Project.Persistence/"]
+COPY ["src/Project.API/Project.API.csproj", "Project.API/"]
+COPY ["src/Project.Application/Project.Application.csproj", "Project.Application/"]
+COPY ["src/Project.Domain/Project.Domain.csproj", "Project.Domain/"]
+COPY ["src/Project.Persistence/Project.Persistence.csproj", "Project.Persistence/"]
 RUN dotnet restore "Project.API/Project.API.csproj"
 COPY . .
 WORKDIR "/src/Project.API"
