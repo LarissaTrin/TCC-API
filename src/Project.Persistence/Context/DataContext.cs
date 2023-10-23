@@ -6,8 +6,8 @@ using Project.Domain.Identity;
 
 namespace Project.Persistence.Context;
 
-public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>,
-                                            UserRole, IdentityUserLogin<int>,
+public class DataContext : IdentityDbContext<User, IdentityRole<int>, int, IdentityUserClaim<int>,
+                                            IdentityUserRole<int>, IdentityUserLogin<int>,
                                             IdentityRoleClaim<int>, IdentityUserToken<int>>
 {
     public DataContext(DbContextOptions<DataContext> options) : base(options) { }
@@ -26,18 +26,18 @@ public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<UserRole>(userRole => {
-            userRole.HasKey(ur => new {ur.UserId, ur.RoleId});
+        modelBuilder.Entity<ProjectRole>()
+            .HasData(new List<ProjectRole>(){
+                new ProjectRole(1, "SuperAdmin"),
+                new ProjectRole(2, "Admin"),
+                new ProjectRole(3, "Leader"),
+                new ProjectRole(4, "User"),
+            });
 
-            userRole.HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .IsRequired();
-
-            userRole.HasOne(ur => ur.User)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.UserId)
-                .IsRequired();
+        modelBuilder.Entity<User>(b =>
+        {
+            b.Property(u => u.Id).ValueGeneratedOnAdd();
+            b.HasKey(u => u.Id);
         });
 
         modelBuilder.Entity<TagCard>()

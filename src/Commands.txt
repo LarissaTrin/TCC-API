@@ -4,5 +4,14 @@ dotnet ef migrations add UpdateIdentity -p Project.Persistence -s Project.API
 Database
 dotnet ef database update -s Project.API
 
+dotnet ef database drop
+
 Run
 dotnet watch run
+
+
+
+docker container exec -it tccapi bash
+
+docker run -d --name tcc-database -p 3306:3306 -e MYSQL_ROOT_PASSWORD=lalaland -e MYSQL_USER=root -e MYSQL_PASSWORD=lalaland -e MYSQL_ROOT_HOST=% -d mysql:8.1
+docker run -d --name tcc-database -p 3306:3306 -v tccdb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=lalaland -d mysql:8.1

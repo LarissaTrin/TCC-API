@@ -45,7 +45,13 @@ builder.Services.AddSwaggerGen(options =>{
 });
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"));
+    string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 1, 0)), mySqlOptions =>
+    {
+        mySqlOptions.EnableRetryOnFailure();
+    });
 });
 
 // implementado "false" somente para facilitar os testes
@@ -56,18 +62,16 @@ builder.Services.AddIdentityCore<User>(options => {
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 4;
 })
-.AddRoles<Role>()
-.AddRoleManager<RoleManager<Role>>()
 .AddSignInManager<SignInManager<User>>()
-.AddRoleValidator<RoleValidator<Role>>()
 .AddEntityFrameworkStores<DataContext>()
 .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
+                    string tokenKey = builder.Configuration["TokenKey"] ?? "chave-padrao-se-nulo";
                     options.TokenValidationParameters = new TokenValidationParameters{
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
@@ -114,9 +118,19 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseStaticFiles();
-    
+    app.UseHttpsRedirection();
     app.UseSwagger();
     app.UseSwaggerUI(c =>{
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project.API");
+        c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+    });
+} else {
+    app.UseStaticFiles();
+
+    app.UseHsts();
+    
+    app.UseSwagger();
+     app.UseSwaggerUI(c =>{
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project.API");
         c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
     });
@@ -124,7 +138,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

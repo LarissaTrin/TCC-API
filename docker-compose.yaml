@@ -1,13 +1,43 @@
+version: "7.0"
+
+volumes: 
+    tccdb:
+
+networks: 
+    mysqlNET:
+    tccapiNET:
+
 services:
-  trindade:
+  mysql:
+    image: "mysql:8.1"
+    container_name: mysql
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - tccdb:/var/lib/mysql
+    networks: 
+      - mysqlNET
+    environment:
+      - MYSQL_ROOT_PASSWORD=lalaland
+
+  tccapi:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: trindade
-    container_name: trindade
+    image: tccapi
+    container_name: tccapi
     tty: true
     volumes:
       - ./code:/root/code
+    networks: 
+      - mysqlNET
+      - tccapiNET
+    ports: 
+      - 5000:80
+    environment: 
+      - DBHOST=mysql
+    depends_on: 
+      - mysql
     deploy:
       resources:
         limits:
