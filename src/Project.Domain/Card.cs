@@ -10,11 +10,11 @@ namespace Project.Domain
         public int ListId { get; set; }
         public int? UserId { get; set; }
         public User? User { get; set; }
-        public DateTime? Date { get; set; }
+        public string? Date { get; set; }
         public int? Priority { get; set; }
         public string? Description { get; set; }
-        public DateTime? PlannedHours { get; set; }
-        public DateTime? CompletedHours { get; set; }
+        public string? PlannedHours { get; set; }
+        public string? CompletedHours { get; set; }
         public int? StoryPoints { get; set; }
         public IEnumerable<TagCard>? TagCards { get; set; }
         public IEnumerable<Comments>? Comments { get; set; }

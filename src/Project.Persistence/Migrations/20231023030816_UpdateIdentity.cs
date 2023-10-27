@@ -297,12 +297,15 @@ namespace Project.Persistence.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ListId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Date = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Priority = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PlannedHours = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CompletedHours = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    PlannedHours = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CompletedHours = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     StoryPoints = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -359,7 +362,8 @@ namespace Project.Persistence.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Date = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CardId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -408,7 +412,8 @@ namespace Project.Persistence.Migrations
                     TaskName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Date = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Completed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false)
                 },

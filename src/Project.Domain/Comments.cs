@@ -8,7 +8,7 @@ namespace Project.Domain
         public string? Description { get; set; }
         public int UserId { get; set; }
         public User? User { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public int CardId { get; set; }
     }
 }

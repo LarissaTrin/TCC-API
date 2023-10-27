@@ -48,10 +48,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     // options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"));
     string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 1, 0)), mySqlOptions =>
-    {
-        mySqlOptions.EnableRetryOnFailure();
-    });
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 // implementado "false" somente para facilitar os testes

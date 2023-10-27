@@ -11,7 +11,7 @@ using Project.Persistence.Context;
 namespace Project.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231023004920_UpdateIdentity")]
+    [Migration("20231023030816_UpdateIdentity")]
     partial class UpdateIdentity
     {
         /// <inheritdoc />
@@ -185,11 +185,11 @@ namespace Project.Persistence.Migrations
                     b.Property<int>("CardNumber")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CompletedHours")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("CompletedHours")
+                        .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Date")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
@@ -197,8 +197,8 @@ namespace Project.Persistence.Migrations
                     b.Property<int>("ListId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("PlannedHours")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("PlannedHours")
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("Priority")
                         .HasColumnType("int");
@@ -227,8 +227,9 @@ namespace Project.Persistence.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
@@ -475,8 +476,8 @@ namespace Project.Persistence.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Date")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TaskName")
                         .HasColumnType("longtext");
