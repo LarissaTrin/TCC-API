@@ -117,7 +117,8 @@ builder.Services.AddCors(opt =>
     opt.AddPolicy(name: "CorsPolicy",
     policy =>
     {
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost").AllowAnyHeader().AllowAnyMethod();
+        //  policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
     });
 });
 
