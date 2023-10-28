@@ -5,8 +5,9 @@
 
 FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0 AS base
 WORKDIR /app
-# EXPOSE 80
-# EXPOSE 443
+EXPOSE 80
+EXPOSE 7024
+EXPOSE 5000
 
 FROM mcr.microsoft.com/dotnet/nightly/sdk:7.0 AS build
 WORKDIR /src

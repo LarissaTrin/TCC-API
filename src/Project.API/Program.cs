@@ -48,7 +48,19 @@ builder.Services.AddDbContext<DataContext>(options =>
     // options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnection"));
     string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+//   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+
+    try
+    {
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    }
+    catch (Exception ex)
+    {
+        // Log the exception or handle it in some way
+        Console.WriteLine($"Error connecting to the database: {ex.Message}");
+        throw; // Rethrow the exception to prevent the application from starting with a misconfigured database
+    }
 });
 
 // implementado "false" somente para facilitar os testes

@@ -18,7 +18,7 @@ services:
     networks: 
       - mysqlNET
     environment:
-      - MYSQL_ROOT_PASSWORD=lalaland
+      - MYSQL_ROOT_PASSWORD=Tcc-senha!
 
   tccapi:
     build:
@@ -33,13 +33,8 @@ services:
       - mysqlNET
       - tccapiNET
     ports: 
-      - 5000:80
+      - 80:80
     environment: 
       - DBHOST=mysql
     depends_on: 
       - mysql
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1.5G
