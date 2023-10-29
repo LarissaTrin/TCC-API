@@ -163,7 +163,7 @@ namespace Project.Application
         {
             try
             {
-                var project = await _projectListPersistence.GetProjectByIdAsync(userId, projectId);
+                var project = await _projectListPersistence.GetProjectByIdForDeleteAsync(userId, projectId);
                 if (project == null) throw new Exception("Don't found Id");
 
                 _geralPersistence.Delete<ProjectList>(project);

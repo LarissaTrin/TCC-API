@@ -51,6 +51,18 @@ namespace Project.Persistence
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<ProjectList> GetProjectByIdForDeleteAsync(int userId, int projectId)
+        {
+            IQueryable<ProjectList> query = _context.Projects
+                .Include(p => p.Tags)
+                .Include(p => p.Lists)
+                .Include(p => p.ProjectUsers);
+                
+            query = query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Id == projectId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<ProjectUser> GetUserByIdByProjectAsync(int projectId, int userId)
         {
             IQueryable<ProjectUser> query = _context.ProjectUsers;
